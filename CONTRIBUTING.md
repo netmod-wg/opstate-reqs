@@ -1,16 +1,4 @@
-# draft-chairs-netmod-opstate-reqs
-
-This repository is for the development of a IETF draft for the [NETMOD working group](http://datatracker.ietf.org/wg/netmod/charter/).
-
-## Links
-
-* IETF Page: https://tools.ietf.org/html/draft-ietf-netmod-opstate-reqs
-* Mailing List: https://www.ietf.org/mailman/listinfo/netmod
-* Issue Tracking: https://github.com/netmod-wg/opstate-reqs/issues
-
-
-
-## Contributing
+# Contributing
 
 Before submitting feedback, please familiarize yourself with our current issues
 list and review the [working group home page](http://datatracker.ietf.org/wg/netmod/charter/). If you're new to this, you may also want to read the [Tao of the
@@ -78,54 +66,3 @@ process, as documented in Best Current Practices RFCs and IESG Statements.
 
 A participant in any IETF activity acknowledges that written, audio and video
 records of meetings may be made and may be available to the public.
-
-
-
-## Issue Tracking
-
-
-Issues are tracked using the following states:
-
-```
-               GitHub Status
-   +----------------+----------------+
-   |      Open      |     Closed     |
-   |                |                |
-   |                |                |
-   |                |                |
-   |      New -----------> Dead      |
-   |       |        |                |
-   |       V        |                |
-   |      Open      |                |
-   |       |        |                |
-   |       V        |                |
-   |     Verify     |                |
-   |       |        |                |
-   |       V        |                |
-   |      Edit      |                |
-   |       |        |                |
-   |       V        |                |
-   |     Review --------> Done       |
-   |                |                |
-   |                |                |
-   |                |                |
-   |   Editorial -------> Editorial  |
-   |                |                |
-   |                |                |
-   +----------------+----------------+
-```
-
-Where the states are defined as follows:
-
-State | Description
------ | -----------
-NEW | A submitted issue starts in the NEW state. Note that issues were collected in Spring 2014. Since then, we are adding new issues only in special cases (e.g., new YANG bugs identified or splitting issues into several smaller issues).
-OPEN | A first discussion of the issue took place and it was accepted to be in scope of the YANG 1.1 effort.
-VERIFY | The issue was discussed and a resolution emerged that needs to be verified on the mailing list.
-EDIT | The issue is waiting for the document editor to make the corresponding changes.
-REVIEW | The edits have been done and the changes in the I-D need to be reviewed.
-DONE | The edits have been reviewed an the issue has been resolved.
-DEAD | The issue was declared dead, e.g., because it is considered outside of the scope of YANG 1.1 or the issue does not seem to require a solution.
-Editorial | The issue is a placeholder for an editorial fix that does not require WG discussion to fix.
-
-
