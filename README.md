@@ -1,9 +1,17 @@
+
 # draft-chairs-netmod-opstate-reqs
 
-This repository is for the development of a IETF draft for the [NETMOD working group](http://datatracker.ietf.org/wg/netmod/charter/).
+## Table of Contents
+
+* [Links](#links)
+* [Contributing](#contributing)
+* [Note Well](#note-well)
+* [Issue Tracking](#issue-tracking)
+
 
 ## Links
 
+* NETMOD WG: http://datatracker.ietf.org/wg/netmod/charter/
 * IETF Page: https://tools.ietf.org/html/draft-ietf-netmod-opstate-reqs
 * Mailing List: https://www.ietf.org/mailman/listinfo/netmod
 * Issue Tracking: https://github.com/netmod-wg/opstate-reqs/issues
