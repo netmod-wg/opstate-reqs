@@ -127,13 +127,13 @@ Where the states are defined as follows:
 
 State | Description
 ----- | -----------
-NEW | A submitted issue starts in the NEW state. Note that issues were collected in Spring 2014. Since then, we are adding new issues only in special cases (e.g., new YANG bugs identified or splitting issues into several smaller issues).
-OPEN | A first discussion of the issue took place and it was accepted to be in scope of the YANG 1.1 effort.
+NEW | A submitted issue starts in the NEW state.
+OPEN | A first discussion of the issue took place and it was accepted to be a real issue.
 VERIFY | The issue was discussed and a resolution emerged that needs to be verified on the mailing list.
 EDIT | The issue is waiting for the document editor to make the corresponding changes.
 REVIEW | The edits have been done and the changes in the I-D need to be reviewed.
 DONE | The edits have been reviewed an the issue has been resolved.
-DEAD | The issue was declared dead, e.g., because it is considered outside of the scope of YANG 1.1 or the issue does not seem to require a solution.
+DEAD | The issue was declared dead, e.g., because it is considered outside of the scope or the issue does not seem to require a solution.
 Editorial | The issue is a placeholder for an editorial fix that does not require WG discussion to fix.
 
 
