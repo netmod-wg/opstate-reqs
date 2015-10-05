@@ -35,7 +35,7 @@
 
 <rfc category="std"
      ipr="trust200902"
-     docName="draft-chairs-netmod-opstate-reqs-latest">
+     docName="draft-ietf-netmod-opstate-reqs-latest">
     <front>
         <title>NETMOD Operational State Requirements</title>
         <author initials="K.W." surname="Watsen" fullname="Kent Watsen">
