@@ -33,7 +33,7 @@
 <?rfc-ext include-index="no" ?>
 <!--<?rfc strict="no"?> -->
 
-<rfc category="std"
+<rfc category="info"
      ipr="trust200902"
      docName="draft-ietf-netmod-opstate-reqs-latest">
     <front>
@@ -121,10 +121,13 @@
               </list>
             </t>
             <t>Separation of configuration and operational state data; ability
-            to retrieve them independently
+            to retrieve them <!--both together--> and independently
               <list style="letters">
                 <t>Be able to retrieve only the derived state aspects of operational state</t>
                 <t>Be able to retrieve only the non-derived state aspects of operational state</t>
+<!--
+                <t>Be able to retrieve both the derived and non-derived state aspects of operational state together</t>
+-->
               </list>
             </t>
             <t>Ability to retrieve operational state corresponding only to
@@ -142,9 +145,9 @@
             </t>
             <t>Ability for distinct modules to leverage a common model-structure
               <list style="letters">
-                <t>Scope is limited to IETF-defined modules</t>
-                <t>Multiple domain-specific trees are okay</t>
-                <t>Multiple namespaces are okay</t>
+                <t>Focus on the IETF-defined modules, and ideally provides guidance to other SDOs</t>
+                <t>Multiple domain-specific model-structure trees are okay</t>
+                <t>Model-structures may be defined in multiple modules with distinct namespaces</t>
               </list>
             </t>
           </list>
