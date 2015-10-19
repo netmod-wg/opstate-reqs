@@ -1,6 +1,7 @@
 <?xml version='1.0'?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY rfc6241 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml">
 <!--
 <!ENTITY rfc4251 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4251.xml">
 <!ENTITY rfc4252 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4252.xml">
@@ -10,7 +11,6 @@
 <!ENTITY rfc6020 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6020.xml">
 <!ENTITY rfc6125 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6125.xml">
 <!ENTITY rfc6187 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6187.xml">
-<!ENTITY rfc6241 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml">
 <!ENTITY rfc6242 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6242.xml">
 <!ENTITY rfc6335 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6335.xml">
 <!ENTITY rfc6520 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6520.xml">
@@ -55,8 +55,10 @@
         <workgroup>NETMOD Working Group</workgroup>
         <keyword>opstate</keyword>
         <abstract>
-            <t>This document captures consensus on operational state requirements
-            by the NETMOD working group.</t>
+            <t>This document defines requirements for servers enabling better
+            visibility and control over the server's operational state.  To
+            achieve this end, this document also defines terminology describing
+            a conceptual model enabling the requirements to be expressed.</t>
         </abstract>
       </front>
 
@@ -67,22 +69,62 @@
         and "OPTIONAL" in this document are to be interpreted as
         described in RFC 2119 <xref target="RFC2119"/>.</t>
 
-        <t>The following terms are defined in <xref target="draft-openconfig-netmod-opstate-01"/>:
-          <list style="symbols">
-            <t>intended configuration - this data represents the state that the
-            network operator intends the system to be in.  This data is
-            colloquially referred to as the 'configuration' of the system.</t>
-            <t>applied configuration - this data represents the state that the
-            network element is actually in, i.e., that which is currently
-            being run by particular software modules (e.g., the BGP daemon),
-            or other systems within the device (e.g., a secondary control-
-            plane, or line card).</t>
-            <t>derived state - this data represents information which is
-            generated as part of the system's own interactions.  For example,
+        <t>The term "server" is used throughout this document to refer to what is many
+        times known as the "device", "system", or "network element".  This definition is
+        intended to be consistent with the term "server" defined in <xref target="RFC6241"/>,
+        Section 1.1, but free of any association to a particular protocol.</t>
+
+        <t>This document defines the following terms:
+          <list style="hanging" hangIndent="4">
+            <t hangText="Applied Configuration:">This data represents the configuration 
+            state that the server is actually in.  That is, the configuration state which
+            is currently being used by server components (e.g., control plane daemons,
+            operating system kernels, line cards).
+              <list style="empty">
+                <t>NOTE: The server's ability to report applied configuration accurately
+                may be limited in some cases, such as when the configuration
+                goes through an intermediate layer without an ability to inspect the
+                lower layer.</t>
+              </list>
+            </t>
+            <t hangText="Asynchronous Configuration Operation:">A configuration request to update
+            the running configuration of a server that is applied asynchronously
+            with respect to the client request.  The server MUST update its intended
+            configuration (see term) before replying to the client indicating
+            whether the request will be processed.  This reply to the client only
+            indicates whether there are any errors in the  original request.  The
+            server's applied configuration state (see term) is updated after the
+            configuration change has been fully effected to all impacted components
+            in the server.  Once applied, there MUST be a mechanism for the client to
+            determine when the request has completed processing and whether the
+            intended config is now fully effective or there are any errors from
+            applying the configuration change, which could be from an asynchronous
+            notification or via a client operation.</t>
+            <t hangText="Continue On Error:">Continue to process configuration data on
+            error; error is recorded, and negative response is generated
+            if any errors occur.</t>
+            <t hangText="Derived State:">This data represents information which is
+            generated as part of the server's own interactions.  For example,
             derived state may consist of the results of protocol interactions
             (the negotiated duplex state of an Ethernet link), statistics
             (such as message queue depth), or counters (such as packet input
             or output bytes).</t>
+            <t hangText="Intended Configuration:">This data represents the configuration 
+            state that the network operator intends the server to be in, and 
+            that has been accepted by the server as valid configuration.</t>
+            <t hangText="Rollback On Error:">If an error condition occurs such that part
+            of applying the configuration fails, the server will stop
+            processing the configuration operation and restore the
+            specified configuration to its complete state at the start
+            of this configuration operation.</t>
+            <t hangText="Synchronous Configuration Operation:">A configuration request to update
+            the running configuration of a server that is applied synchronously with
+            respect to the client request (i.e. a blocking call).  The server MUST fully attempt to apply 
+            the configuration change to all impacted components in the server,
+            updating both the server's intended and applied configuration (see terms),
+            before replying to the client.  The reply to the client indicates whether there
+            are any errors in the request or errors from applying the configuration
+            change.</t>
           </list>
         </t>
       </section>
@@ -92,15 +134,18 @@
           <list style="numbers">
             <t>Ability to interact with both intended and applied configuration
               <list style="letters">
-                <t>The ability to ask the operational components of a system
+                <t>The ability to ask the operational components of a server
                    (e.g., line cards) for the configuration that they are currently
-                   using. This is the "applied configuration".</t>
+                   using. This is the applied configuration (see term).</t>
                 <t>Applied configuration is read-only</t>
                 <t>The data model for the applied configuration is the same as
                    the data model for the intended configuration (same leaves)</t>
-                <t>For asynchronous systems, when fully synchronized, the data
-                   in the applied configuration is the same as the data in the
-                   intended configuration.</t>
+                <t>When a configuration change for any intended configuration
+                   node has been successfully applied to the server (e.g. not
+                   failed, nor deferred due to absent hardware) then the
+                   existence and value of the corresponding applied
+                   configuration node must match the intended configuration
+                   node.</t>
               </list>
             </t>
             <t>Applied configuration as part of operational state
@@ -109,25 +154,30 @@
                 derived state nodes in a single protocol operation.</t>
               </list>
             </t>
-            <t>Support for both transactional, synchronous management
-            systems as well as distributed, asynchronous management
-            systems
+            <t>Support for both synchronous and asynchronous configuration
+            operations (see terms)
               <list style="letters">
-                <t>For asynchronous systems, the ability to request a protocol
-                 operation to not return (i.e. block) until the intended
-                 configuration has been fully synchronized.</t>
-                <t>The protocol operation's response would indicate the result
-                  of the operation (success, failure, partial, etc.)</t>
+                <t>A server may support only synchronous configuration
+                operations, or only asynchronous configuration operations, or
+                both synchronous and asynchronous configuration operations on
+                a client-specified per-operation basis.</t>
+                <t>Servers that support asynchronous configuration operations MAY
+                also provide a verify operation that a client can request from
+                the server to return information regarding the difference
+                between the intended and applied configurations.</t>
+                <t>The configuration protocol MUST specify how configuration
+                errors are handled.  Errors may be handled by "stop on error",
+                "continue on error" or "rollback on error" semantics (see
+                terms).  Support for "rollback on error" SHOULD be provided.</t>
               </list>
             </t>
+
             <t>Separation of configuration and operational state data; ability
             to retrieve them <!--both together--> and independently
               <list style="letters">
                 <t>Be able to retrieve only the derived state aspects of operational state</t>
                 <t>Be able to retrieve only the non-derived state aspects of operational state</t>
-<!--
                 <t>Be able to retrieve both the derived and non-derived state aspects of operational state together</t>
--->
               </list>
             </t>
             <t>Ability to retrieve operational state corresponding only to
@@ -163,7 +213,25 @@
       </section>
 
       <section title="Acknowledgements">
-        <t>TBD</t>
+        <t>The authors would like to thank the following for contributing to this document (in alphabetic order):
+Acee Lindem,
+Andy Bierman,
+Anees Shaikh,
+Benoit Claise,
+Carl Moberg,
+Dan Romascanu,
+Dean Bogdanovic,
+Gert Grammel,
+Jonathan Hansford,
+Juergen Schoenwaelder,
+Lou Berger,
+Mahesh Jethanandani,
+Martin Bjorklund,
+Phil Shafer,
+Randy Presuhn,
+Rob Shakir,
+Robert Wilton,
+Sterne, Jason.</t>
       </section>
 
     </middle>
@@ -171,9 +239,10 @@
     <back>
 
       <references title="Normative References">
-          &rfc2119;
+        &rfc2119;
       </references>
       <references title="Informative References">
+        &rfc6241;
         <reference anchor="draft-openconfig-netmod-opstate-01" target="https://tools.ietf.org/html/draft-openconfig-netmod-opstate-01">
           <front>
             <title>Consistent Modeling of Operational State Data in YANG</title>
@@ -212,6 +281,24 @@
 
       </references>
 
+      <section title="Relation to Terms Defined in Other Drafts">
+        <t>The following terms were originally defined in <xref target="RFC6241"/>, but since
+        modified by the NETMOD WG:
+          <list style="symbols">
+            <t>continue-on-error</t>
+            <t>stop-on-error</t>
+            <t>rollback-on-error</t>
+          </list>
+        </t>
+        <t>The following terms were originally defined in
+        <xref target="draft-openconfig-netmod-opstate-01"/>, but since modified by the NETMOD WG:
+          <list style="symbols">
+            <t>Intended Configuration</t>
+            <t>Applied Configuration</t>
+            <t>Derived State</t>
+          </list>
+        </t>
+      </section>
       <section title="Relation to Requirements in Other Drafts">
         <t>The requirements in this document roughly map onto the requirements listed in 
         <xref target="draft-openconfig-netmod-opstate-01"/> and
