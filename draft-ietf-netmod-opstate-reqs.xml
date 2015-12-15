@@ -112,6 +112,11 @@
             <t hangText="Intended Configuration:">This data represents the configuration 
             state that the network operator intends the server to be in, and 
             that has been accepted by the server as valid configuration.</t>
+            <t hangText="Operational State:">Operational State is the current state
+            of the system as known to the various components of the system
+            (e.g., control plane daemons, operating system kernels, line cards).
+            The operational state includes both applied configuration and derived
+            state.</t>
             <t hangText="Rollback On Error:">If an error condition occurs such that part
             of applying the configuration fails, the server will stop
             processing the configuration operation and restore the
@@ -146,6 +151,8 @@
                    existence and value of the corresponding applied
                    configuration node must match the intended configuration
                    node.</t>
+                <t>The data model SHOULD annotate which subset of intended
+                configuration nodes might take on a different value when applied</t>
               </list>
             </t>
             <t>Applied configuration as part of operational state
@@ -172,12 +179,11 @@
               </list>
             </t>
 
-            <t>Separation of configuration and operational state data; ability
-            to retrieve them <!--both together--> and independently
+            <t>Separation of the applied configuration and derived state aspects of operational state; ability to retrieve them independently and together
               <list style="letters">
+                <t>Be able to retrieve only the applied configuration aspects of operational state</t>
                 <t>Be able to retrieve only the derived state aspects of operational state</t>
-                <t>Be able to retrieve only the non-derived state aspects of operational state</t>
-                <t>Be able to retrieve both the derived and non-derived state aspects of operational state together</t>
+                <t>Be able to retrieve both the applied configuration and derived state aspects of operational state together</t>
               </list>
             </t>
             <t>Ability to retrieve operational state corresponding only to
