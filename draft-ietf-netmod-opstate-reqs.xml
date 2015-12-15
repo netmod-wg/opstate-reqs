@@ -155,12 +155,6 @@
                 configuration nodes might take on a different value when applied</t>
               </list>
             </t>
-            <t>Applied configuration as part of operational state
-              <list style="letters">
-                <t>The ability to retrieve the applied configuration and
-                derived state nodes in a single protocol operation.</t>
-              </list>
-            </t>
             <t>Support for both synchronous and asynchronous configuration
             operations (see terms)
               <list style="letters">
@@ -184,12 +178,6 @@
                 <t>Be able to retrieve only the applied configuration aspects of operational state</t>
                 <t>Be able to retrieve only the derived state aspects of operational state</t>
                 <t>Be able to retrieve both the applied configuration and derived state aspects of operational state together</t>
-              </list>
-            </t>
-            <t>Ability to retrieve operational state corresponding only to
-            derived values, statistics, etc.
-              <list style="empty">
-                <t>// this is a duplicate of # 4-a</t>
               </list>
             </t>
             <t>Ability to relate configuration with its corresponding operational state
