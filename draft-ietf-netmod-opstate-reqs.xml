@@ -301,26 +301,13 @@ Sterne, Jason.</t>
         from on list discussions:
           <list style="numbers">
             <t>draft-openconfig-netmod-opstate-01, Section 3</t>
-            <t>draft-openconfig-netmod-opstate-01, Section 4.1</t>
             <t>draft-openconfig-netmod-opstate-01, Section 4.2</t>
             <t>draft-openconfig-netmod-opstate-01, Section 4.3</t>
-            <t>draft-openconfig-netmod-opstate-01, Section 4.4</t>
             <t>draft-openconfig-netmod-opstate-01, Section 4.5</t>
             <t>draft-openconfig-netmod-model-structure-00 (no section)</t>
           </list>
         </t>
       </section>
-
-<!--
-      <section title="Change Log">
-        <section title="00 to 01">
-          <t>
-            <list style="symbols">
-            </list>
-          </t>
-        </section>
-      </section>
--->
 
       <section title="Open Issues">
         <t>All issues with this draft are tracked using GitHub issues.  Please see: https://github.com/netmod-wg/opstate-reqs/issues to see currently opened issues.</t>
