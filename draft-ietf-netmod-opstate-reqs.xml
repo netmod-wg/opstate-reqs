@@ -151,8 +151,6 @@
                    existence and value of the corresponding applied
                    configuration node must match the intended configuration
                    node.</t>
-                <t>The data model SHOULD annotate which subset of intended
-                configuration nodes might take on a different value when applied</t>
               </list>
             </t>
             <t>Support for both synchronous and asynchronous configuration
